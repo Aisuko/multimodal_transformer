@@ -28,6 +28,10 @@ Update all paths and configuration in 'mmtransformer/config.py'.
 + Run 'mmtransformer/scripts/extract_notes.py', the folder 'data-mimic3/root/test_text_fixed/', and 'data-mimic3/root/text_fixed/' will be generated.
 + Run 'mmtransformer/scripts/extract_T0.py' file.
 
+```bash
+python mmtransformer/scripts/extract_notes.py > extract_notes_log.txt 2>&1
+```
+
 # Train and Test
 
 For our well-trained model, you can download from [GoogleDrive](https://drive.google.com/file/d/1Wch0pEgQ8PeWE9p77B6rdNuo9l28CZNv/view?usp=sharing). Unzip the file and put them in './Multimodal_Transformer/mmtransformer/models/Checkpoints' and './Multimodal_Transformer/mmtransformer/models/Data' accordingly. Or you can generate the files yourself.
@@ -70,3 +74,19 @@ The code is based on repository by Khadanga et al. given in https://github.com/k
 
 
 The MIMIC-III clinical variables pre-processing is clone from repository by Harutyunyan et al. given in https://github.com/YerevaNN/mimic3-benchmarks
+
+
+# Structure
+
+```bash
+raw-mimic3
+--NOTEEVENTS.csv
+```
+
+## Necessary data
+
+unzip all the data at the root path
+
+```bash
+https://huggingface.co/datasets/aisuko/data-mimic3/tree/main
+```

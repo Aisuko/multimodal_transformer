@@ -1,0 +1,3 @@
+[submodule "mimic3-benchmarks"]
+	path = mimic3-benchmarks
+	url = https://github.com/YerevaNN/mimic3-benchmarks

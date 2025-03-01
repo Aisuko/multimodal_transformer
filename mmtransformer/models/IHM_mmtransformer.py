@@ -555,6 +555,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=args['LR'])# decay, dynamic
 print("--- Loaded everything %s seconds ---" % (time.time() - start_time))
 with open(os.path.join('Logs', 'ManLogs', args['checkpoint_path'] + '_ManLog.txt'), 'a+') as f:
     print("--- Loaded everything %s seconds ---" % (time.time() - start_time), file=f)
+
 for epoch in range(number_epoch):
     print("Started training for epoch: %d" % epoch)
     data = list(zip(data_X, data_y, data_text, txt_ids, attention_masks, data_times))

@@ -7,8 +7,10 @@ import os
 import pandas as pd
 import numpy as np
 import pickle
-path = 'PATH-TO-CODE/Multimodal_Transformer/data-mimic3/root/train/'
-test_starttime_path = 'PATH-TO-CODE/Multimodal_Transformer/data-mimic3/root/T0/train_starttime.pkl'
+
+
+path = '/workspaces/Multimodal_Transformer/data-mimic3/root/train/'
+test_starttime_path = '/workspaces/Multimodal_Transformer/data-mimic3/root/T0/train_starttime.pkl'
 
 
 # path = 'PATH-TO-CODE/Multimodal_Transformer/data-mimic3/root/test/'

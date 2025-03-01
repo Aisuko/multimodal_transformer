@@ -16,7 +16,7 @@ from mimic3models.preprocessing import Discretizer, Normalizer
 #from mimic3models import keras_utils
 from mimic3models import common_utils
 
-from utility import TextReader, merge_text_raw
+from utils import TextReader, merge_text_raw
 from config import Config
 
 args = Config()

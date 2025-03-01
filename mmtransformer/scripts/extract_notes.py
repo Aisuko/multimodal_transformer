@@ -10,8 +10,12 @@ Combine all the clinical notes in a same HAMD_ID sorted by CHAETTIME.
 """
 import re
 import json
+import nltk
 
 from nltk import sent_tokenize, word_tokenize
+
+nltk.download('punkt_tab')
+
 
 SECTION_TITLES = re.compile(
     r'('
@@ -113,17 +117,25 @@ def preprocess_mimic(text):
             yield text.lower()
 
 
-df = pd.read_csv('./PATH-TO-ORIGINAL-MIMIC-DATA/physionet.org/mimiciii/1.4/NOTEEVENTS.csv')
-df.CHARTDATE = pd.to_datetime(df.CHARTDATE)
-df.CHARTTIME = pd.to_datetime(df.CHARTTIME)
-df.STORETIME = pd.to_datetime(df.STORETIME)
+df = pd.read_csv(
+    '/workspaces/Multimodal_Transformer/raw-mimic3/NOTEEVENTS.csv',
+    usecols=['SUBJECT_ID', 'HADM_ID', 'CHARTTIME', 'TEXT'],
+    parse_dates=['CHARTTIME'],
+    low_memory=False
+    )
 
-df2 = df[df.SUBJECT_ID.notnull()]
-df2 = df2[df2.HADM_ID.notnull()]
-df2 = df2[df2.CHARTTIME.notnull()]
-df2 = df2[df2.TEXT.notnull()]
+# df.CHARTDATE = pd.to_datetime(df.CHARTDATE)
+# df.CHARTTIME = pd.to_datetime(df.CHARTTIME)
+# df.STORETIME = pd.to_datetime(df.STORETIME)
 
-df2 = df2[['SUBJECT_ID', 'HADM_ID', 'CHARTTIME', 'TEXT']]
+# df2 = df[df.SUBJECT_ID.notnull()]
+# df2 = df2[df2.HADM_ID.notnull()]
+# df2 = df2[df2.CHARTTIME.notnull()]
+# df2 = df2[df2.TEXT.notnull()]
+
+df.dropna(subset=['SUBJECT_ID', 'HADM_ID', 'CHARTTIME', 'TEXT'], inplace=True)
+
+df2 = df[['SUBJECT_ID', 'HADM_ID', 'CHARTTIME', 'TEXT']]
 
 del df
 
@@ -153,13 +165,17 @@ min        1.000000      1.000000      1.000000
 max     1214.000000   1214.000000   1214.000000
 '''
 
-# dataset_path = 'PATH-TO-CODE/Multimodal_Transformer/data-mimic3/root/test/'
-dataset_path = 'PATH-TO-CODE/Multimodal_Transformer/data-mimic3/root/train/'
+dataset_path = '/workspaces/Multimodal_Transformer/data-mimic3/root/test/'
+# dataset_path = '/workspaces/Multimodal_Transformer/data-mimic3/root/train/'
 all_files = os.listdir(dataset_path)
 all_folders = list(filter(lambda x: x.isdigit(), all_files))
 
-# output_folder = 'PATH-TO-CODE/Multimodal_Transformer/data-mimic3/root/test_text_fixed/'
-output_folder = 'PATH-TO-CODE/Multimodal_Transformer/data-mimic3/root/text_fixed/'
+output_folder = '/workspaces/Multimodal_Transformer/data-mimic3/root/test_text_fixed/'
+# output_folder = '/workspaces/Multimodal_Transformer/data-mimic3/root/text_fixed/'
+# create the output folder if not exists
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+
 
 suceed = 0
 failed = 0
